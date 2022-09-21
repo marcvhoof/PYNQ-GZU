@@ -31,7 +31,7 @@ You can watch the getting started video guide, or follow the instructions below.
 
 ### Setup the board
 
-![](./images/pynqzu_setup.png)
+![](./images/pynqgzu_setup.png)
 
 
 1. Insert the Micro SD card (pre-loaded with the PYNQ-ZU image) 

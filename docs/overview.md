@@ -21,11 +21,11 @@ The board has the following features and interface:
 
 ## PYNQ-ZU board features and interfaces
 
-![](./images/pynqzu_hardware.png)
+![](./images/pynqgzu_hardware.png)
 
 ## Block Diagram
 
-![](./images/pynqzu_block_diagram.png)
+![](./images/pynqgzu_block_diagram.png)
 
 ## PS/PL connections
 

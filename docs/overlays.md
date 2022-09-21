@@ -106,7 +106,7 @@ Run the following Tcl commands in Vivado to download the latest PYNQ-ZU board fi
 
 ```console
 xhub::refresh_catalog [xhub::get_xstores xilinx_board_store]
-xhub::install [xhub::get_xitems "tul.com.tw:xilinx_board_store:pynqzu:1.1"]
+xhub::install [xhub::get_xitems "tul.com.tw:xilinx_board_store:pynqgzu:1.1"]
 ```
 
 ## Build the HLS IP and the create the project
@@ -124,7 +124,7 @@ The first command builds HLS IP for this design, and the second command builds t
 
 The base overlay is a complicated design with a large number of IP blocks. The image below shows a view of the base design. You can click on this image to see a PDF version of the block design. This picture is only intending to show you a top level view of the level of complexity in the design, and not the detail of every IP. If you would like to explore the design in more detail, you can rebuild the design to this point, and check individual IP, and open various IP subsystems. 
 
-[![](./images/pynqzu_base_t.png)](./pdf/zu_base.pdf)
+[![](./images/pynqgzu_base_t.png)](./pdf/zu_base.pdf)
 
 You can run the following commands to rebuilt the bitstream.
 ```
