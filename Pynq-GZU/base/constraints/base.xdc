@@ -165,7 +165,6 @@ set_property IOSTANDARD LVCMOS12 [get_ports { ffc_b1_tri_io[2] }]
 set_property DRIVE 6 [get_ports { ffc_b1_tri_io[2] }]
 set_property PULLUP true [get_ports {ffc_b1_tri_io[2]}]
 
-
 #set_property IOSTANDARD MIPI_DPHY_DCI [get_ports {ffc_?_tri_io[*]}];
 #set_property SLEW SLOW [get_ports {ffc_?_tri_io[*]}];
 #set_property DRIVE 4 [get_ports {ffc_?_tri_io[*]}];
@@ -188,14 +187,22 @@ set_property DRIVE 6 [get_ports { gpio_emio_tri_io[2] }]
 #set_property IOSTANDARD MIPI_DPHY_DCI [get_ports mipi_b_data_n[1]]
 
 ## Audio CODEC I2S, I2C
-set_property PACKAGE_PIN A11 [get_ports aud_scl_io]
-set_property PACKAGE_PIN D12 [get_ports aud_sda_io]
-set_property PACKAGE_PIN A10 [get_ports aud_lrclk]
-set_property PACKAGE_PIN C12 [get_ports aud_bclk]
-set_property PACKAGE_PIN C11 [get_ports aud_mclk]
-set_property PACKAGE_PIN B11 [get_ports aud_adc_sdata]
-set_property PACKAGE_PIN D11 [get_ports aud_dac_sdata]
-set_property IOSTANDARD LVCMOS18 [get_ports aud_*]
+set_property PACKAGE_PIN C11 [get_ports audio_codec_clk_10MHz]; 
+set_property PACKAGE_PIN C12 [get_ports audio_codec_bclk]; 
+set_property PACKAGE_PIN A10 [get_ports audio_codec_lrclk]; 
+set_property PACKAGE_PIN D11 [get_ports audio_codec_sdata_o];
+set_property PACKAGE_PIN B11 [get_ports audio_codec_sdata_i]; 
+#order of SCL and SDA correct?
+set_property PACKAGE_PIN A11 [get_ports {codec_addr[0]}];
+set_property PACKAGE_PIN D12 [get_ports {codec_addr[1]}];
+
+set_property IOSTANDARD LVCMOS18 [get_ports audio_codec_clk_10MHz]; 
+set_property IOSTANDARD LVCMOS18 [get_ports audio_codec_bclk]; 
+set_property IOSTANDARD LVCMOS18 [get_ports audio_codec_lrclk]; 
+set_property IOSTANDARD LVCMOS18 [get_ports audio_codec_sdata_o];
+set_property IOSTANDARD LVCMOS18 [get_ports audio_codec_sdata_i]; 
+set_property IOSTANDARD LVCMOS18 [get_ports codec_addr[0]];
+set_property IOSTANDARD LVCMOS18 [get_ports codec_addr[1]]; 
 
 ## PMOD XADC
 ## Commented because pins are contrained by System Management Wizard. Only >2018.2 lets us select bank 43.
@@ -246,24 +253,36 @@ set_property IOSTANDARD LVCMOS18 [get_ports dp_aux_hotplug_detect]
 #set_property IOSTANDARD LVCMOS12 [get_ports {eth_jtag_tri_io[*]}]
 #set_property DRIVE 6 [get_ports {eth_jtag_tri_io[*]}]
 
-##PMOD JB
-set_property PACKAGE_PIN AE13 [get_ports {pmod_tri_io[0]}];  #IO_L8N_HDGC_AD4N_46/26 Sch=jb[1]
-set_property PACKAGE_PIN AG14 [get_ports {pmod_tri_io[1]}];  #IO_L2N_AD10N_46/26 Sch=jb[2]
-set_property PACKAGE_PIN AH14 [get_ports {pmod_tri_io[2]}];  #IO_L1P_AD11P_46/26 Sch=jb[3]
-set_property PACKAGE_PIN AG13 [get_ports {pmod_tri_io[3]}];  #IO_L8P_HDGC_AD4P_46/26 Sch=jb[4]
-set_property PACKAGE_PIN AE14 [get_ports {pmod2_tri_io[0]}];  #IO_L6P_HDGC_AD6P_46/26 Sch=jb[7]
-set_property PACKAGE_PIN AF13 [get_ports {pmod2_tri_io[1]}];  #IO_L2P_AD10P_46/26 Sch=jb[8]
-set_property PACKAGE_PIN AE15 [get_ports {pmod2_tri_io[2]}];  #IO_L5P_HDGC_AD7P_46/26 Sch=jb[9]
-set_property PACKAGE_PIN AH13 [get_ports {pmod2_tri_io[3]}];  #IO_L1N_AD11N_46/26 Sch=jb[10]
-#PMOD JC
-set_property PACKAGE_PIN E13 [get_ports {pmod_tri_io[4]}];  #IO_L6N_HDGC_AD6N_46/26 Sch=jc[1]
-set_property PACKAGE_PIN G13 [get_ports {pmod_tri_io[5]}];  #IO_L7P_HDGC_AD5P_46/26 Sch=jc[2]
-set_property PACKAGE_PIN B13 [get_ports {pmod_tri_io[6]}]; #IO_L3P_AD9P_46/26 Sch=jc[3]
-set_property PACKAGE_PIN D14 [get_ports {pmod_tri_io[7]}]; #IO_L5N_HDGC_AD7N_46/26 Sch=jc[4]
-set_property PACKAGE_PIN F13 [get_ports {pmod2_tri_io[4]}]; #IO_L7N_HDGC_AD5N_46/26 Sch=jc[7]
-set_property PACKAGE_PIN C13 [get_ports {pmod2_tri_io[5]}]; #IO_L4N_AD8N_46/26 Sch=jc[8]
-set_property PACKAGE_PIN C14 [get_ports {pmod2_tri_io[6]}]; #IO_L4P_AD8P_46/26 Sch=jc[9]
-set_property PACKAGE_PIN A13 [get_ports {pmod2_tri_io[7]}]; #IO_L3N_AD9N_46/26 Sch=jc[10]
+# pmod0 (JB)
+set_property PACKAGE_PIN AE13 [get_ports {pmod0[0]}];
+set_property PACKAGE_PIN AG14 [get_ports {pmod0[1]}];
+set_property PACKAGE_PIN AH14 [get_ports {pmod0[2]}];
+set_property PACKAGE_PIN AG13 [get_ports {pmod0[3]}];
+set_property PACKAGE_PIN AE14 [get_ports {pmod0[4]}];
+set_property PACKAGE_PIN AF13 [get_ports {pmod0[5]}];
+set_property PACKAGE_PIN AE15 [get_ports {pmod0[6]}];
+set_property PACKAGE_PIN AH13 [get_ports {pmod0[7]}];
+set_property PULLUP true [get_ports {pmod0[2]}];
+set_property PULLUP true [get_ports {pmod0[3]}];
+set_property PULLUP true [get_ports {pmod0[6]}];
+set_property PULLUP true [get_ports {pmod0[7]}];
+set_property IOSTANDARD LVCMOS33 [get_ports {pmod0[*]}];
+# pmod1 (JC)
+set_property PACKAGE_PIN E13 [get_ports {pmod1[0]}];
+set_property PACKAGE_PIN G13 [get_ports {pmod1[1]}];
+set_property PACKAGE_PIN B13 [get_ports {pmod1[2]}];
+set_property PACKAGE_PIN D14 [get_ports {pmod1[3]}];
+set_property PACKAGE_PIN F13 [get_ports {pmod1[4]}];
+set_property PACKAGE_PIN C13 [get_ports {pmod1[5]}];
+set_property PACKAGE_PIN C14 [get_ports {pmod1[6]}];
+set_property PACKAGE_PIN A13 [get_ports {pmod1[7]}];
+set_property PULLUP true [get_ports {pmod1[2]}];
+set_property PULLUP true [get_ports {pmod1[3]}];
+set_property PULLUP true [get_ports {pmod1[6]}];
+set_property PULLUP true [get_ports {pmod1[7]}];
+set_property DRIVE 4 [get_ports {pmod1[*]}];
+set_property IOSTANDARD LVCMOS33 [get_ports {pmod1[*]}];
+
 ##PMOD JD
 set_property -dict { PACKAGE_PIN E15    IOSTANDARD LVCMOS33     PULLUP true} [get_ports {UART_CTL_rxd}]; #IO_L4P_AD12P_44/24 Sch=jd[1]
 set_property -dict { PACKAGE_PIN E14    IOSTANDARD LVCMOS33     PULLUP true} [get_ports {UART_CTL_txd}];   #IO_L1N_AD15N_44/24 Sch=jd[7]
@@ -286,28 +305,33 @@ set_property SLEW SLOW [get_ports {pmod2_tri_io[*]}]
 set_property PULLUP true [get_ports {pmod2_tri_io[*]}]
 
 ## Buttons
-set_property -dict { PACKAGE_PIN A12    IOSTANDARD LVCMOS18 } [get_ports { pl_buttons_tri_i[0] }]; #IO_L11P_AD9P_45/25 Sch=btn[6]
-set_property -dict { PACKAGE_PIN F12    IOSTANDARD LVCMOS18 } [get_ports { pl_buttons_tri_i[1] }]; #IO_L6P_HDGC_45/25 Sch=btn[5]
-set_property -dict { PACKAGE_PIN J12    IOSTANDARD LVCMOS18 } [get_ports { pl_buttons_tri_i[2] }]; #IO_L4P_AD12P_45/25 Sch=btn[4]
-set_property -dict { PACKAGE_PIN H12    IOSTANDARD LVCMOS18 } [get_ports { pl_buttons_tri_i[3] }]; #IO_L4N_AD12N_45/25 Sch=btn[3]
-set_property -dict { PACKAGE_PIN B10    IOSTANDARD LVCMOS18 } [get_ports { pl_buttons_tri_i[4] }]; #IO_L9N_AD11N_45/25 Sch=btn[2]
+# push_button_4bits_tri_i
+set_property PACKAGE_PIN A12 [get_ports {push_button_4bits_tri_i[0]}];
+set_property PACKAGE_PIN F12 [get_ports {push_button_4bits_tri_i[1]}];
+set_property PACKAGE_PIN J12 [get_ports {push_button_4bits_tri_i[2]}];
+set_property PACKAGE_PIN H12 [get_ports {push_button_4bits_tri_i[3]}];
+set_property IOSTANDARD LVCMOS18 [get_ports {push_button_4bits_tri_i[*]}];
 
 ## Switches
-set_property -dict { PACKAGE_PIN AB15  IOSTANDARD LVCMOS33 } [get_ports { pl_switches_tri_i[0] }]; #IO_L8P_HDGC_44/24 Sch=sw[3]
-set_property -dict { PACKAGE_PIN W12   IOSTANDARD LVCMOS33 } [get_ports { pl_switches_tri_i[1] }]; #IO_L11P_AD9P_44/24 Sch=sw[2]
-set_property -dict { PACKAGE_PIN Y13   IOSTANDARD LVCMOS33 } [get_ports { pl_switches_tri_i[2] }]; #IO_L10N_AD10N_44/24 Sch=sw[1]
-set_property -dict { PACKAGE_PIN AB14  IOSTANDARD LVCMOS33 } [get_ports { pl_switches_tri_i[3] }]; #IO_L8N_HDGC_44/24 Sch=sw[0]
+# dip_switch_4bits_tri_i
+set_property PACKAGE_PIN AB15 [get_ports {dip_switch_4bits_tri_i[0]}];
+set_property PACKAGE_PIN W12 [get_ports {dip_switch_4bits_tri_i[1]}];
+set_property PACKAGE_PIN Y13 [get_ports {dip_switch_4bits_tri_i[2]}];
+set_property PACKAGE_PIN AB14 [get_ports {dip_switch_4bits_tri_i[3]}];
+set_property IOSTANDARD LVCMOS33 [get_ports {dip_switch_4bits_tri_i[*]}];
 
-## LED
-set_property -dict { PACKAGE_PIN J14   IOSTANDARD LVCMOS33 } [get_ports { pl_leds_tri_o[0] }]; #IO_L11N_AD1N_46/26 Sch=ld[4]
-set_property -dict { PACKAGE_PIN K14   IOSTANDARD LVCMOS33 } [get_ports { pl_leds_tri_o[1] }]; #IO_L11P_AD1P_46/26 Sch=ld[3]
-set_property -dict { PACKAGE_PIN L13   IOSTANDARD LVCMOS33 } [get_ports { pl_leds_tri_o[2] }]; #IO_L12N_AD0N_46/26 Sch=ld[2]
-set_property -dict { PACKAGE_PIN L14   IOSTANDARD LVCMOS33 } [get_ports { pl_leds_tri_o[3] }]; #IO_L12P_AD0P_46/26 Sch=ld[1]
+# led_4bits_tri_o
+set_property PACKAGE_PIN J14 [get_ports {led_4bits_tri_o[0]}];
+set_property PACKAGE_PIN K14 [get_ports {led_4bits_tri_o[1]}];
+set_property PACKAGE_PIN L13 [get_ports {led_4bits_tri_o[2]}];
+set_property PACKAGE_PIN L14 [get_ports {led_4bits_tri_o[3]}];
+set_property IOSTANDARD LVCMOS33 [get_ports {led_4bits_tri_o[*]}];
 
-## RGB LED
-set_property -dict { PACKAGE_PIN A8    IOSTANDARD LVCMOS12 } [get_ports { pl_rgb_led_tri_o[0] }]; #IO_L23N_T3U_N9_66 Sch=ld5_b
-set_property -dict { PACKAGE_PIN B9    IOSTANDARD LVCMOS12 } [get_ports { pl_rgb_led_tri_o[1] }]; #IO_L24N_T3U_N11_66 Sch=ld5_g
-set_property -dict { PACKAGE_PIN C9    IOSTANDARD LVCMOS12 } [get_ports { pl_rgb_led_tri_o[2]  }]; #IO_L24P_T3U_N10_66 Sch=ld5_r
+# rgbled0_tri_o
+set_property PACKAGE_PIN A8 [get_ports {rgbleds_tri_o[0]}];  # Blue
+set_property PACKAGE_PIN B9 [get_ports {rgbleds_tri_o[1]}];  # Green
+set_property PACKAGE_PIN C9 [get_ports {rgbleds_tri_o[2]}];  # Red
+set_property IOSTANDARD LVCMOS12 [get_ports {rgbleds_tri_o[*]}];
 
 ## GTH reference clock jitter filter auxiliary
 #set_property PACKAGE_PIN C4 [get_ports { clkgth_tri_io[0] }]; #IO_L11N_T1U_N9_GC_66 Sch=clkgth_intrn_ls
@@ -325,8 +349,8 @@ set_property -dict { PACKAGE_PIN F6 IOSTANDARD LVCMOS12 DRIVE 6 } [get_ports { g
 #set_property PULLUP true [get_ports mux_sda_io]
 
 ## SYZYGY
-        #set_property PACKAGE_PIN AB1 [get_ports {SYZYGY_D_P[0]}]
-        #set_property PACKAGE_PIN AE3 [get_ports {SYZYGY_D_P[2]}]
+#set_property PACKAGE_PIN AB1 [get_ports {SYZYGY_D_P[0]}]
+#set_property PACKAGE_PIN AE3 [get_ports {SYZYGY_D_P[2]}]
         
 set_property PACKAGE_PIN AE2 [get_ports {syzygy_1_tri_io[0]}];#6
 set_property PACKAGE_PIN AF2 [get_ports {syzygy_2_tri_io[0]}];#8
